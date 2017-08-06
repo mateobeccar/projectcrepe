@@ -1,4 +1,4 @@
-@import url("font-awesome.min.css");
+ @import url("font-awesome.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
 
 /*
@@ -111,7 +111,7 @@
 
 	}
 
-	@media screen and (max-width: 1280px) {
+	/*@media screen and (max-width: 1280px) {
 
 		.container.\31 25\25 {
 			width: 100%;
@@ -135,7 +135,7 @@
 			width: 60em;
 		}
 
-	}
+	}*/
 
 	@media screen and (max-width: 980px) {
 
@@ -1809,7 +1809,6 @@
 		-webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		border-bottom: dotted 1px;
 		color: #e89980;
 		text-decoration: none;
 	}
@@ -2828,7 +2827,7 @@
 				border: 0;
 			}
 
-		#header nav {
+		/*#header nav {
 			height: inherit;
 			line-height: inherit;
 			position: absolute;
@@ -2883,7 +2882,7 @@
 					#header nav > ul > li .button {
 						margin: 0 0 0 0.5em;
 						position: relative;
-					}
+					}*/
 
 		#header input[type="submit"],
 		#header input[type="reset"],
@@ -2916,9 +2915,9 @@
 				left: 0;
 			}
 
-			#header .container nav {
+			/*#header .container nav {
 				right: 0;
-			}
+			}*/
 
 		#header.reveal {
 			-moz-animation: reveal-header 0.5s;
@@ -2937,13 +2936,13 @@
 			position: absolute;
 		}*/
 
-			#header.alt nav > ul > li a:not(.button).icon:before {
+			/*#header.alt nav > ul > li a:not(.button).icon:before {
 				color: rgba(255, 255, 255, 0.75);
 			}
 
 			#header.alt nav > ul > li.active a:not(.button) {
 				background-color: rgba(255, 255, 255, 0.2);
-			}
+			}*/
 
 			#header.alt input[type="submit"],
 			#header.alt input[type="reset"],
@@ -3867,3 +3866,10 @@ height:580px;
 #view{
 	font-size: 100%;
 }
+
+.logo {
+  height: 50%;
+  width: 50%;
+}
+
+.nav
