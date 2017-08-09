@@ -9,7 +9,6 @@
 <div class="page-header">
     <h2>Campus Connect</h2>
 </div>
-<section class="box">
 <div>
     {% if current_user.company %}
     <h4> <u>Post a Job Below </u></h4>
@@ -30,7 +29,6 @@
     {{ macros.pagination_widget(pagination, '.index') }}
 </div>
 {% endif %}
-</section>
 {% endblock %}
 
 {% block scripts %}
