@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Campus Connect - {{ user.username }}{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+  <section class="box">
+    <div class="profile-header">
+        <h2>
+          {% if user.name %}
+          {{ user.name }}
+          {% else %}
+          {{ user.username }}
+          {% if not current_user.company %}
+          <a class="btn btn-default" href="{{ url_for('.edit_profile') }}"> Add Real Name</a>
+          {% endif %}
+          {% endif %} </h2>
+          {% if user.name or user.location %}
+        <p>
+            <!-- {% if user.name %}{{ user.name }}<br>{% endif %} -->
+            {% if user.location %}
+                From <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a><br>
+            {% endif %}
+        </p>
+        {% endif %}
+        {% if current_user.is_administrator() %}
+        <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+        {% endif %}
+        {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+        <p>
+            </p>
+            <p>
+            <b>University:</b>
+            {% if not current_user.company %}
+             {% if not user.university %} <a class="btn btn-default" href="{{ url_for('.edit_profile') }}"> Add University</a>
+            {% else %} {{ user.university}}{% endif %}
+            {% else %}
+            {% if not user.university %} N/A
+            {% else %} {{ user.university}} {% endif %}
+            {% endif %}</p>
+            <p><b>Year:</b>
+              {% if not current_user.company %}
+              {% if not user.year %} <a class="btn btn-default" href="{{ url_for('.edit_profile') }}"> Add Year</a>
+              {% else %} {{ user.year}}{% endif %}
+              {% else %}
+              {% if not user.year %} N/A
+              {% else %} {{ user.year}}{% endif %}
+              {% endif %}         
+          </p>
+          <p>Member since {{ moment(user.member_since).format('L') }}. Last seen {{ moment(user.last_seen).fromNow() }}.</p>
+            {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
+            | <span class="label label-default">Follows you</span>
+            {% endif %}
+        </p>
+        <p>
+            <!-- {% if user == current_user %}
+            <a class="btn btn-default" href="{{ url_for('.edit_profile') }}">Edit Profile</a>
+            {% endif %} -->
+            {% if current_user.is_administrator() %}
+            <a class="btn btn-danger" href="{{ url_for('.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+            {% endif %}
+        </p>
+    </div>
+  </section>
+</div>
+<h2> Manage Jobs </h2>
+{% include '_postsuserdashboard.html' %}
+{% if user.jobs_done %}
+  {% if pagination %}
+    <div class="pagination">
+      {{ macros.pagination_widget(pagination, '.user', username=user.username) }}
+    </div>
+  {% endif %}
+{% else %}
+<div id="textspacing">
+</div>
+{% endif %}
+
+{% endblock %}

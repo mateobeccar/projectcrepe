@@ -1,0 +1,37 @@
+<ul class="posts">
+    {% for app in apps %}
+    {% if not app.approved %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=app.applicant.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ app.applicant.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-author"> <a href="{{ url_for('main.user', username=app.applicant.username) }}">
+              {% if app.applicant.name %}
+                    {{ app.applicant.name }}
+                  {% else %}
+                    {{ app.applicant.username }}
+                    {% endif %}</a></div>
+            <div class="post-body">
+                {% if app.why %}
+                  Additional applicant info: {{ app.why }}
+                {% endif %}
+            </div>
+            <div class="post-footer">
+
+              <a href="{{ url_for('.approve', id=app.post_id, applicant_id=app.applicant_id) }}">
+                  <span class="label label-success" id="view">Approve</span>
+              </a>
+
+              <a href="{{ url_for('.reject', id=post.id, applicant_id=app.applicant_id) }}">
+                  <span class="label label-danger" id="view">Reject</span>
+              </a>
+
+            </div>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>

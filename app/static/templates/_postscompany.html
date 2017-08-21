@@ -1,0 +1,127 @@
+
+<ul class="posts">
+  <h3> Active Jobs </h3>
+    {% for post in posts %}
+    {% if not post.job_completed %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author"><a href="{{ url_for('.company', username=post.author.username) }}">
+            {% if post.author.name %}
+            {{ post.author.name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}</a></div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+
+            <div class="post-footer">
+
+                {% if post.workers != 0 %}
+                <a href="{{ url_for('.hired', id=post.id) }}">
+                    <span class="label label-info" id="view">Interact With Hired Students ( {{ post.workers }} )</span>
+                </a>
+                {% endif %}
+
+                {% if post.applicant_count != 0 %}
+                <a href="{{ url_for('.applicants', id=post.id) }}">
+                    <span class="label label-warning" id="view">{{ post.applicant_count }} Applicants</span>
+                </a>
+                {% endif %}
+
+                {% if not current_user.company %}
+                <a href="{{ url_for('.apply', id=post.id) }}">
+                    <span class="label label-info" id="view">Apply</span>
+                </a>
+                {% endif %}
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary" id="view">Edit</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">Edit [Admin]</span>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                    <span class="label label-primary" id="view">View</span>
+                </a>
+            </div>
+
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+    <h3> Completed Jobs </h3>
+    {% for post in posts %}
+    {% if post.job_completed %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author"><a href="{{ url_for('.company', username=post.author.username) }}">
+            {% if post.author.name %}
+            {{ post.author.name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}</a></div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+
+            <!-- <div class="post-footer">
+
+                {% if post.workers != 0 %}
+                <a href="{{ url_for('.hired', id=post.id) }}">
+                    <span class="label label-info" id="view">Interact With Hired Students ( {{ post.workers }} )</span>
+                </a>
+                {% endif %}
+
+                {% if post.applicant_count != 0 %}
+                <a href="{{ url_for('.applicants', id=post.id) }}">
+                    <span class="label label-warning" id="view">{{ post.applicant_count }} Applicants</span>
+                </a>
+                {% endif %}
+
+                {% if not current_user.company %}
+                <a href="{{ url_for('.apply', id=post.id) }}">
+                    <span class="label label-info" id="view">Apply</span>
+                </a>
+                {% endif %}
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary" id="view">Edit</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">Edit [Admin]</span>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                    <span class="label label-primary" id="view">View</span>
+                </a>
+            </div> -->
+
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>

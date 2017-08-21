@@ -65,7 +65,7 @@ class EditProfileAdminForm(Form):
 
 class PostForm(Form):
     title = StringField("Title", validators=[Required()])
-    body = PageDownField("Job", validators=[Required()])
+    body = StringField("Job", validators=[Required()])
     university = SelectField(
         'University',
         choices=[('',''), ('Yale University', 'Yale University'), ('Harvard University', 'Harvard University'),

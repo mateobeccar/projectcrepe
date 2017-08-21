@@ -1,0 +1,117 @@
+<ul class="posts">
+      <h3> Active Jobs </h3>
+    {% for post in posts %}
+    {% for app in apps %}
+    {% if app.post_id == post.id %}
+    {% if not post.job_completed %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author"><a href="{{ url_for('.company', username=post.author.username) }}">
+            {% if post.author.name %}
+            {{ post.author.name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}</a></div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {% if post.title %}
+                        <u>{{ post.title }}</u>
+                      {% endif %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                {% if post.title %}
+                    <u>{{ post.title }}</u>
+                  {% endif %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+            <div class="post-footer">
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary" id="view">Edit</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">Edit [Admin]</span>
+                </a>
+                {% endif %}
+                {% if current_user.company %}
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                    <span class="label label-primary" id="view">View</span>
+                </a>
+                {% else %}
+                <a href="{{ url_for('.studenthired', id=post.id) }}#comments">
+                    <span class="label label-info" id="view">Information about job</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    <h3> Jobs Completed </h3>
+    {% for post in posts %}
+    {% for app in apps %}
+    {% if app.post_id == post.id %}
+    {% if post.job_completed %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author"><a href="{{ url_for('.company', username=post.author.username) }}">
+            {% if post.author.name %}
+            {{ post.author.name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}</a></div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {% if post.title %}
+                        <u>{{ post.title }}</u>
+                      {% endif %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                {% if post.title %}
+                    <u>{{ post.title }}</u>
+                  {% endif %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+            <!-- <div class="post-footer">
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary" id="view">Edit</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">Edit [Admin]</span>
+                </a>
+                {% endif %}
+                {% if not current_user.company %}
+                <a href="{{ url_for('.apply', id=post.id) }}">
+                    <span class="label label-info" id="view">Apply</span>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('.post', id=post.id) }}#comments">
+                    <span class="label label-primary" id="view">View</span>
+                </a>
+            </div> -->
+        </div>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+</ul>

@@ -1,0 +1,51 @@
+<ul class="posts">
+    {% for post in posts %}
+    <li class="post">
+        <div class="post-thumbnail">
+            <a href="{{ url_for('.user', username=post.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+            </a>
+        </div>
+        <div class="post-content">
+            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-author"><a href="{{ url_for('.company', username=post.author.username) }}">
+            {% if post.author.name %}
+            {{ post.author.name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}</a></div>
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+            <div class="post-footer">
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-primary" id="view">Edit</span>
+                </a>
+                {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('.edit', id=post.id) }}">
+                    <span class="label label-danger">Edit [Admin]</span>
+                </a>
+                {% endif %}
+                {% if current_user == post.author %}
+                <a href="{{ url_for('.job_completed', id=post.id) }}">
+                    <span class="label label-success" id="view">Mark Job as Completed</span>
+                </a>
+                {% endif %}
+                {% if not current_user.company %}
+                <a href="{{ url_for('.apply', id=post.id) }}">
+                    <span class="label label-info" id="view">Apply</span>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('.index') }}#comments">
+                    <span class="label label-danger" id="view">Back</span>
+                </a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
